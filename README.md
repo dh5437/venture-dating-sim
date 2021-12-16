@@ -1,4 +1,10 @@
 # venture-dating-sim
+ ## <벤창웹 연애 시뮬레이션>
+👤 그녀(그)의 사랑을 쟁취하라.
+
+나에 대한 그녀(그)의 호감도를 높여서 사랑을 쟁취하자!
+
+<br>
 
 # 🧰 Model explanation 
 ## User
