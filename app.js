@@ -7,13 +7,12 @@ const corsOption = {
   origin: 'http://localhost:3000',
 };
 
-const indexRouter = require('./routes/index');
-
 app.use(express.json());
 app.use(cors(corsOption));
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', indexRouter);
+app.use('/', require('./routes/index'));
+app.use('/signup', require('./routes/signup'));
 
 app.listen(PORT, () => {
   console.log(`listening at port : ${PORT}`);
