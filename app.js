@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', require('./routes/index'));
 app.use('/signup', require('./routes/signup'));
+app.use('/login', require('./routes/login'));
 
 app.listen(PORT, () => {
   console.log(`listening at port : ${PORT}`);
