@@ -15,6 +15,7 @@ app.use('/', require('./routes/index'));
 app.use('/signup', require('./routes/signup'));
 app.use('/login', require('./routes/login'));
 app.use('/escape', require('./routes/escape'));
+app.use('/retry', require('./routes/retry'));
 
 app.listen(PORT, () => {
   console.log(`listening at port : ${PORT}`);
