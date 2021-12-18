@@ -1,5 +1,5 @@
 const { Coordinate, Item, Key, Map, Monster, User } = require('./models');
-
+const fs = require('fs');
 const init = async () => {
   await Coordinate.deleteMany();
   await Item.deleteMany();
@@ -9,14 +9,17 @@ const init = async () => {
   await User.deleteMany();
 
   const monsters = ['대학 선배', '중학교 동창', '전 애인', '첫사랑', '그녀의 과제', '인관심 조원'];
+  const monsterJson = [];
   for (const _monster of monsters) {
     const _maxhp = Math.ceil(Math.random() * 100) * 5;
     const _hp = _maxhp;
     const _exp = _hp / 4 + 20;
     const _str = _hp / 5 + 2;
     const monster = new Monster({ name: _monster, maxhp: _maxhp, hp: _hp, exp: _exp, str: _str });
+    monsterJson.push({ name: _monster, maxhp: _maxhp, hp: _hp, exp: _exp, str: _str });
     await monster.save();
   }
+  fs.writeFileSync('./datas/monsters.json', JSON.stringify(monsterJson));
 
   const items = [
     '러브 레터',
@@ -34,23 +37,28 @@ const init = async () => {
     '목도리',
     '현란한 카톡멘트',
   ];
+  const itemJson = [];
   for (const _item of items) {
     const property = ['hp', 'exp', 'str'];
     const value = property[Math.floor(Math.random() * 3)];
     if (value === 'hp') {
       const randomhp = Math.ceil(Math.random() * 50);
       const item = new Item({ name: _item, hp: randomhp, exp: 0, str: 0, isActive: true });
+      itemJson.push({ name: _item, hp: randomhp, exp: 0, str: 0, isActive: true });
       await item.save();
     } else if (value === 'exp') {
       const randomexp = Math.ceil(Math.random() * 40);
       const item = new Item({ name: _item, hp: 0, exp: randomexp, str: 0, isActive: true });
+      itemJson.push({ name: _item, hp: 0, exp: randomexp, str: 0, isActive: true });
       await item.save();
     } else {
       const randomstr = Math.ceil(Math.random() * 20);
       const item = new Item({ name: _item, hp: 0, exp: 0, str: randomstr, isActive: true });
+      itemJson.push({ name: _item, hp: 0, exp: 0, str: randomstr, isActive: true });
       await item.save();
     }
   }
+  fs.writeFileSync('./datas/items.json', JSON.stringify(itemJson));
 
   const coordinates = [];
   for (let i = 0; i < 10; i++) {
@@ -87,14 +95,17 @@ const init = async () => {
     const _y = remainingCoordinates[i] % 10;
     maps.push({ coordinate: { x: _x, y: _y }, event: 'random' });
   }
-  console.log(maps.length);
+
+  const mapJson = [];
   for (const _map of maps) {
     const _x = _map.coordinate.x;
     const _y = _map.coordinate.y;
     const _coordinate = await Coordinate.findOne({ x: _x, y: _y });
     const map = new Map({ coordinate: _coordinate, event: _map.event });
+    mapJson.push({ coordinate: _coordinate, event: _map.event });
     await map.save();
   }
+  fs.writeFileSync('./datas/map.json', JSON.stringify(mapJson));
 
   console.log('initialization completed');
 };
