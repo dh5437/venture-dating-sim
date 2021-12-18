@@ -13,33 +13,41 @@
 ## User
 
 - username(String)
-- password(alphanumeric)
+- password(String)
 - name(String)
-- key(string)
+- keys(ObjectId, ref)
 - level(Number)
-- item(array)
+- items(ObjectId, ref)
+- maxhp(Number)
 - hp(Number)
 - exp(Number)
 - str(Number)
-- map(db saving, objectId)
+- map(ObjectId, ref)
 
 ## Item
-
-- user(multi vs multi)
+- name(String)
+- user(ObjectId, ref)
+- quantity(Number)
 - hp(Number)
 - exp(Number)
 - str(Number)
+- isActive(Boolean)
 
+## Key
+- publicKey(String)
+- secretKey(String)
+- user(ObjectId, ref)
 ## Monster
 
 - name(String)
+- maxhp(Number)
 - hp(Number)
 - exp(Number)
 - str(Number)
 
 ## map
 
-- coordinate(objectId)
+- coordinate(objectId, ref)
 - event(String)
 
 ## coordinate
