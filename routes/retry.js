@@ -9,7 +9,7 @@ router.get('/:turn', setAuth, async (req, res) => {
   const remainTurn = 5 - turn;
   const log = '시작 능력치가 새롭게 설정되었습니다!';
 
-  if ((turn > 0) & (turn < 6)) {
+  if (1 <= turn && turn <= 5) {
     user.str = Math.floor(Math.random() * 11) + 5;
     // user.def = Math.floor(Math.random() * 11) + 5;
   } else {
@@ -17,7 +17,7 @@ router.get('/:turn', setAuth, async (req, res) => {
   }
 
   await user.save();
-  res.send({ remainTurn, log });
+  res.send({ remainTurn, log, user });
 });
 
 module.exports = router;
