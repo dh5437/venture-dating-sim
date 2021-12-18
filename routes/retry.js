@@ -11,7 +11,7 @@ router.get('/:turn', setAuth, async (req, res) => {
 
   if ((turn > 0) & (turn < 6)) {
     user.str = Math.floor(Math.random() * 11) + 5;
-    user.def = Math.floor(Math.random() * 11) + 5;
+    // user.def = Math.floor(Math.random() * 11) + 5;
   } else {
     return res.status(404).send({ error: '능력치를 재설정 할 수 없습니다.' });
   }
