@@ -10,17 +10,17 @@ router.get('/:id', setAuth, async (req, res) => {
   const item = await Item.findOne({ user, id });
   const userItems = user.items;
   const isValidId = await Item.find({ id });
-  const isInUserItems = userItems.find((testItem) => item.id === testItem.id);
+  const isInUserItems = userItems.some((testItem) => item.id === testItem.id);
 
   if (!isValidId) {
     return res.status(404).send({ error: 'corresponding item is not found' });
-  } else if (isInUserItems) {
-    item.qunatity += 1;
-  } else if (!isInUserItems) {
-    userItems.push(item);
-    item.qunatity += 1;
   }
 
+  if (!isInUserItems) {
+    userItems.push(item);
+  }
+
+  item.qunatity += 1;
   user.hp += item.hp;
   user.exp += item.exp;
   user.str += item.str;
