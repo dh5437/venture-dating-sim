@@ -7,19 +7,18 @@ const { Item } = require('../models');
 router.get('/:id', setAuth, async (req, res) => {
   const user = req.user;
   const { id } = req.params;
-  const item = await Item.findOne({ id });
+  const item = await Item.findOne({ user, id });
+  const userItems = user.items;
+  const isValidId = await Item.find({ id });
+  const isInUserItems = userItems.find((testItem) => item.id === testItem.id);
 
-  // 해당 아이디를 가진 아이템이 Item 모델 자체에 있는지 확인
-  const existItem = await Item.find({ id });
-  // 해당 아이디를 가진 아이템이 user.items에 있는지 확인
-  const targetItem = await user.items.findOne({ item: item.id });
-
-  if (!existItem) {
+  if (!isValidId) {
     return res.status(404).send({ error: 'corresponding item is not found' });
-  } else if (targetItem) {
-    user.items.item.qunatity += 1;
-  } else if (!targetItem) {
-    user.items.push(item);
+  } else if (isInUserItems) {
+    item.qunatity += 1;
+  } else if (!isInUserItems) {
+    userItems.push(item);
+    item.qunatity += 1;
   }
 
   user.hp += item.hp;
@@ -33,7 +32,7 @@ router.get('/:id', setAuth, async (req, res) => {
   // log: 아이템 {item.name}을 획득했다! {0 < 일때만 보이게}가 { } 상승했다! -> 어떻게?
   const log = `아이템 ${item.name}을 획득했다!`;
 
-  res.send({ user, item, log });
+  res.status(200).send({ user, item, log });
 });
 
 module.exports = router;
