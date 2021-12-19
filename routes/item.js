@@ -4,19 +4,34 @@ const router = express.Router();
 const { setAuth } = require('../utils');
 const { Item } = require('../models');
 
-router.get('/:itemId', setAuth, async (req, res) => {
+router.get('/:id', setAuth, async (req, res) => {
   const user = req.user;
-  const { itemId } = req.params;
+  const { id } = req.params;
+  const item = await Item.findOne({ user, id });
+  const userItems = user.items;
+  const isValidId = await Item.find({ id });
+  const isInUserItems = userItems.find((testItem) => item.id === testItem.id);
 
-  // 아이템 받아오기
-  // log: 아이템 { }을 획득했다! { }가 { } 상승했다!
-  // 아이템에 따른 str과 def, hp 변화 반영
-  // user의 items에 업데이트 -> client에 쏴주기
-  // client에 뿌려줄 것들: user 모델(items , 변경된 유저 정보), 획득한 아이템 이름, 메시지(로그)
+  if (!isValidId) {
+    return res.status(404).send({ error: 'corresponding item is not found' });
+  } else if (isInUserItems) {
+    item.qunatity += 1;
+  } else if (!isInUserItems) {
+    userItems.push(item);
+    item.qunatity += 1;
+  }
+
+  user.hp += item.hp;
+  user.exp += item.exp;
+  user.str += item.str;
+  // user.def += item.def
 
   await item.save();
   await user.save();
-  res.send({ user, item, log });
+
+  const log = `아이템 ${item.name}을 획득했다!`;
+
+  res.status(200).send({ user, item, log });
 });
 
 module.exports = router;
