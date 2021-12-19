@@ -7,6 +7,7 @@ const monsterSchema = new Schema({
   hp: Number,
   exp: Number,
   str: Number,
+  def: Number,
 });
 
 const Monster = mongoose.model('Monster', monsterSchema);

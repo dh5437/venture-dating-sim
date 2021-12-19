@@ -12,6 +12,8 @@ const userSchema = new Schema({
   hp: Number,
   exp: Number,
   str: Number,
+  def: Number,
+  turn: Number,
   map: { type: Schema.Types.ObjectId, ref: 'Map' },
 });
 

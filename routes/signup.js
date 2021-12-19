@@ -39,6 +39,8 @@ router.post(
         hp: 100,
         exp: 0,
         str: 10,
+        def: 5,
+        turn: 0,
         map: map,
       });
       await user.save();
