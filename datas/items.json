@@ -1,16 +1,1 @@
-[
-  { "name": "러브 레터", "hp": 26, "exp": 0, "str": 0, "isActive": true },
-  { "name": "꽃다발", "hp": 0, "exp": 0, "str": 8, "isActive": true },
-  { "name": "향수", "hp": 0, "exp": 0, "str": 9, "isActive": true },
-  { "name": "참이슬", "hp": 0, "exp": 13, "str": 0, "isActive": true },
-  { "name": "코트", "hp": 0, "exp": 0, "str": 4, "isActive": true },
-  { "name": "투명 뿔테 안경", "hp": 22, "exp": 0, "str": 0, "isActive": true },
-  { "name": "트레이닝 바지", "hp": 0, "exp": 26, "str": 0, "isActive": true },
-  { "name": "현금", "hp": 0, "exp": 3, "str": 0, "isActive": true },
-  { "name": "비트코인", "hp": 0, "exp": 0, "str": 9, "isActive": true },
-  { "name": "이더리움", "hp": 0, "exp": 0, "str": 13, "isActive": true },
-  { "name": "통장", "hp": 0, "exp": 0, "str": 5, "isActive": true },
-  { "name": "따뜻한 스웨터", "hp": 0, "exp": 0, "str": 13, "isActive": true },
-  { "name": "목도리", "hp": 46, "exp": 0, "str": 0, "isActive": true },
-  { "name": "현란한 카톡멘트", "hp": 0, "exp": 28, "str": 0, "isActive": true }
-]
+[{"name":"러브 레터","hp":12,"exp":0,"str":0,"isActive":true},{"name":"꽃다발","hp":21,"exp":0,"str":0,"isActive":true},{"name":"향수","hp":44,"exp":0,"str":0,"isActive":true},{"name":"참이슬","hp":0,"exp":0,"str":9,"isActive":true},{"name":"코트","hp":10,"exp":0,"str":0,"isActive":true},{"name":"투명 뿔테 안경","hp":0,"exp":0,"str":8,"isActive":true},{"name":"트레이닝 바지","hp":0,"exp":29,"str":0,"isActive":true},{"name":"현금","hp":0,"exp":0,"str":1,"isActive":true},{"name":"비트코인","hp":0,"exp":0,"str":3,"isActive":true},{"name":"이더리움","hp":0,"exp":4,"str":0,"isActive":true},{"name":"통장","hp":27,"exp":0,"str":0,"isActive":true},{"name":"따뜻한 스웨터","hp":0,"exp":20,"str":0,"isActive":true},{"name":"목도리","hp":5,"exp":0,"str":0,"isActive":true},{"name":"현란한 카톡멘트","hp":0,"exp":0,"str":17,"isActive":true}]
