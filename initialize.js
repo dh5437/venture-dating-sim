@@ -15,8 +15,16 @@ const init = async () => {
     const _hp = _maxhp;
     const _exp = _hp / 4 + 20;
     const _str = _hp / 5 + 2;
-    const monster = new Monster({ name: _monster, maxhp: _maxhp, hp: _hp, exp: _exp, str: _str });
-    monsterJson.push({ name: _monster, maxhp: _maxhp, hp: _hp, exp: _exp, str: _str });
+    const _def = Math.ceil(Math.random() * 15);
+    const monster = new Monster({
+      name: _monster,
+      maxhp: _maxhp,
+      hp: _hp,
+      exp: _exp,
+      str: _str,
+      def: _def,
+    });
+    monsterJson.push({ name: _monster, maxhp: _maxhp, hp: _hp, exp: _exp, str: _str, def: _def });
     await monster.save();
   }
   fs.writeFileSync('./datas/monsters.json', JSON.stringify(monsterJson));
