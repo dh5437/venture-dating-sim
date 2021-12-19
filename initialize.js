@@ -98,12 +98,6 @@ const init = async () => {
     else maps.push({ coordinate: { x: _x, y: _y }, event: 'item' });
   }
 
-  for (let i = 0; i < remainingCoordinates.length; i++) {
-    const _x = Math.floor(remainingCoordinates[i] / 10);
-    const _y = remainingCoordinates[i] % 10;
-    maps.push({ coordinate: { x: _x, y: _y }, event: 'random' });
-  }
-
   const mapJson = [];
   for (const _map of maps) {
     const _x = _map.coordinate.x;
