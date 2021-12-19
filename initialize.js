@@ -51,18 +51,60 @@ const init = async () => {
     const value = property[Math.floor(Math.random() * 3)];
     if (value === 'hp') {
       const randomhp = Math.ceil(Math.random() * 50);
-      const item = new Item({ name: _item, hp: randomhp, exp: 0, str: 0, isActive: true });
-      itemJson.push({ name: _item, hp: randomhp, exp: 0, str: 0, isActive: true });
+      const item = new Item({
+        name: _item,
+        hp: randomhp,
+        exp: 0,
+        str: 0,
+        id: items.indexOf(_item),
+        isActive: true,
+      });
+      itemJson.push({
+        name: _item,
+        hp: randomhp,
+        exp: 0,
+        str: 0,
+        id: items.indexOf(_item),
+        isActive: true,
+      });
       await item.save();
     } else if (value === 'exp') {
       const randomexp = Math.ceil(Math.random() * 40);
-      const item = new Item({ name: _item, hp: 0, exp: randomexp, str: 0, isActive: true });
-      itemJson.push({ name: _item, hp: 0, exp: randomexp, str: 0, isActive: true });
+      const item = new Item({
+        name: _item,
+        hp: 0,
+        exp: randomexp,
+        str: 0,
+        id: items.indexOf(_item),
+        isActive: true,
+      });
+      itemJson.push({
+        name: _item,
+        hp: 0,
+        exp: randomexp,
+        str: 0,
+        id: items.indexOf(_item),
+        isActive: true,
+      });
       await item.save();
     } else {
       const randomstr = Math.ceil(Math.random() * 20);
-      const item = new Item({ name: _item, hp: 0, exp: 0, str: randomstr, isActive: true });
-      itemJson.push({ name: _item, hp: 0, exp: 0, str: randomstr, isActive: true });
+      const item = new Item({
+        name: _item,
+        hp: 0,
+        exp: 0,
+        str: randomstr,
+        id: items.indexOf(_item),
+        isActive: true,
+      });
+      itemJson.push({
+        name: _item,
+        hp: 0,
+        exp: 0,
+        str: randomstr,
+        id: items.indexOf(_item),
+        isActive: true,
+      });
       await item.save();
     }
   }
