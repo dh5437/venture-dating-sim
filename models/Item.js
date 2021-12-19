@@ -8,6 +8,7 @@ const itemSchema = new Schema({
   hp: Number,
   exp: Number,
   str: Number,
+  id: Number,
   isActive: Boolean,
 });
 itemSchema.index({ name: 1, user: 1 }, { unique: true });
