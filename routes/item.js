@@ -29,7 +29,6 @@ router.get('/:id', setAuth, async (req, res) => {
   await item.save();
   await user.save();
 
-  // log: 아이템 {item.name}을 획득했다! {0 < 일때만 보이게}가 { } 상승했다! -> 어떻게?
   const log = `아이템 ${item.name}을 획득했다!`;
 
   res.status(200).send({ user, item, log });
