@@ -7,14 +7,6 @@ const { Item } = require('../models');
 router.get('/:id', setAuth, async (req, res) => {
   const user = req.user;
   const { id } = req.params;
-  const userInfo = {
-    level: user.level,
-    str: user.str,
-    def: user.def,
-    hp: user.hp,
-    exp: user.exp,
-    items: user.items,
-  };
 
   // user.items와는 무관, user당 생성된 아이템들
   // await Item.find({ user })의 리턴값이 배열이 아니라면 userItems가 배열 형태가 되게 fix
@@ -36,6 +28,15 @@ router.get('/:id', setAuth, async (req, res) => {
 
   await targetItem.save();
   await user.save();
+
+  const userInfo = {
+    level: user.level,
+    str: user.str,
+    def: user.def,
+    hp: user.hp,
+    exp: user.exp,
+    items: user.items,
+  };
 
   const message = `${targetItem.name}을 획득했다!`;
 
