@@ -19,6 +19,7 @@ app.use('/retry', require('./routes/retry'));
 app.use('/item', require('./routes/item'));
 app.use('/rest', require('./routes/rest'));
 app.use('/move', require('./routes/move'));
+app.use('/battle', require('./routes/battle'));
 
 app.listen(PORT, () => {
   console.log(`listening at port : ${PORT}`);
