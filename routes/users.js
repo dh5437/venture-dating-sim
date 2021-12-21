@@ -10,6 +10,7 @@ router.get('/me', setAuth, async (req, res) => {
 
   const map = await Map.findById(user.map);
   const event = map.event;
+
   res.send({ userInfo, map, event });
 });
 
