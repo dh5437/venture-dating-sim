@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const crypto = require('crypto');
 
@@ -14,13 +15,14 @@ router.post('/', async (req, res) => {
     return res.status(403).send({ error: 'Wrong Password. Check it again.' });
   const pub = encryptPassword(crypto.randomBytes(20));
   const sec = encryptPassword(crypto.randomBytes(20));
-  // front : const key = jwt.sign({publicKey : pub}, sec, {expiresIn : 600});
+  const _jwt = jwt.sign({ publicKey: pub }, sec, { expiresIn: 3600 });
+
   const key = new Key({ publicKey: pub, secretKey: sec, user });
   await key.save();
 
-  const { level, str, def, hp, exp } = user;
-  const userInfo = { level, str, def, hp, exp };
-  res.send({ userInfo, event: 'rest', publicKey: key.publicKey, secretKey: key.secretKey });
+  const { level, str, def, hp, exp, items } = user;
+  const userInfo = { level, str, def, hp, exp, items };
+  res.send({ userInfo, event: 'rest', accessToken: _jwt });
 });
 
 module.exports = router;

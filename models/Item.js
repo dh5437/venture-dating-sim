@@ -9,6 +9,7 @@ const itemSchema = new Schema({
   exp: Number,
   str: Number,
   id: Number,
+  description: String,
   isActive: Boolean,
 });
 
