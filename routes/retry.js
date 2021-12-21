@@ -6,7 +6,12 @@ const { setAuth } = require('../utils');
 router.get('/:turn', setAuth, async (req, res) => {
   const user = req.user;
   const { turn } = req.params;
+  const userInfo = {
+    str: user.str,
+    def: user.def,
+  };
   const remainTurn = 5 - turn;
+
   const message = '시작 능력치가 새롭게 설정되었습니다!';
 
   if (1 <= turn && turn <= 5) {
@@ -17,7 +22,8 @@ router.get('/:turn', setAuth, async (req, res) => {
   }
 
   await user.save();
-  res.send({ remainTurn, message, user });
+
+  res.send({ remainTurn, message, userInfo });
 });
 
 module.exports = router;
