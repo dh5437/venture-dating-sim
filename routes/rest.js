@@ -5,12 +5,19 @@ const { setAuth } = require('../utils');
 const { Rest } = require('../models');
 
 router.get('/:id', setAuth, async (req, res) => {
-  const user = req.user;
+  const user = req.user;  
   const { id } = req.params;
   const rest = await Rest.findOne({ id });
   const message = rest.description;
+  const userInfo = {
+    level: user.level,
+    str: user.str,
+    def: user.def,
+    hp: user.hp,
+    exp: user.exp,
+  };
 
-  res.send({ user, message });
+  res.send({ userInfo, message });
 });
 
 module.exports = router;

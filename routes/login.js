@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
   const key = new Key({ publicKey: pub, secretKey: sec, user });
   await key.save();
 
-  res.send({ user, publicKey: key.publicKey, secretKey: key.secretKey });
+  const { level, str, def, hp, exp } = user;
+  const userInfo = { level, str, def, hp, exp };
+  res.send({ userInfo, event: 'rest', publicKey: key.publicKey, secretKey: key.secretKey });
 });
 
 module.exports = router;
