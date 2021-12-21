@@ -12,13 +12,15 @@ const setAuth = async (req, res, next) => {
   const [bearer, key] = authorization.split(' ');
   if (bearer !== 'Bearer') return res.status(400).send({ error: 'Wrong Authentication' });
   const decodedJwt = jwt.decode(key);
+
   if (decodedJwt === null) return res.status(400).send({ error: 'Invalid Key' });
   const _pub = decodedJwt.publicKey;
+
   const _key = await Key.findOne({ publicKey: _pub });
   let user = null;
   try {
-    const verified = jwt.verify(key, _key.secretKey);
-    user = _key.user;
+    jwt.verify(key, _key.secretKey);
+    user = await User.findById(_key.user);
   } catch (e) {
     return res.status(403).send({ error: 'Invalid token' });
   }

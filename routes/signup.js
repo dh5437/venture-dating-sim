@@ -56,8 +56,8 @@ router.post(
         hp: _item.hp,
         exp: _item.exp,
         str: _item.str,
+        id: _item.id,
         user,
-        isActive: true,
       });
       await item.save();
     }
