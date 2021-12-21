@@ -23,8 +23,9 @@ const init = async () => {
     const _description = _rest;
     const rest = new Rest({
       description: _description,
+      id: restEvents.indexOf(_rest),
     });
-    restJson.push({ description: _description });
+    restJson.push({ description: _description, id: restEvents.indexOf(_rest) });
     await rest.save();
   }
   fs.writeFileSync('./datas/rest.json', JSON.stringify(restJson));
@@ -37,8 +38,10 @@ const init = async () => {
     ['그녀의 과제', '그녀의 과제가 등장했다. 좀 많은가..?'],
     ['인관심 조원', '그녀의 인관심 조원이 등장했다.'],
   ];
+
   const monsterJson = [];
-  for (const _monster of monsters) {
+
+  monsters.forEach(async (_monster, index) => {
     const _maxHp = Math.ceil(Math.random() * 100) * 5;
     const _hp = _maxHp;
     const _exp = Math.ceil(Math.random() * 20) + 20;
@@ -52,7 +55,8 @@ const init = async () => {
       exp: _exp,
       str: _str,
       def: _def,
-      id: monsters.indexOf(_monster[0]),
+      description: _monster[1],
+      id: index,
     });
     monsterJson.push({
       name: _monster[0],
@@ -61,10 +65,11 @@ const init = async () => {
       exp: _exp,
       str: _str,
       def: _def,
-      id: monsters.indexOf(_monster[0]),
+      description: _monster[1],
+      id: index,
     });
     await monster.save();
-  }
+  });
   fs.writeFileSync('./datas/monsters.json', JSON.stringify(monsterJson));
 
   const items = [
