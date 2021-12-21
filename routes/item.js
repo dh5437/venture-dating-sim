@@ -6,7 +6,7 @@ const { Item } = require('../models');
 
 router.get('/:id', setAuth, async (req, res) => {
   const user = req.user;
-  const { id } = req.params;
+  const id = +req.params.id;
 
   // user.items와는 무관, user당 생성된 아이템들
   // await Item.find({ user })의 리턴값이 배열이 아니라면 userItems가 배열 형태가 되게 fix
@@ -19,10 +19,9 @@ router.get('/:id', setAuth, async (req, res) => {
   }
 
   targetItem.qunatity += 1;
-  user.hp += targetItem.hp;
-  user.exp += targetItem.exp;
-  user.str += targetItem.str;
-  user.def += targetItem.def;
+  user.hp += targetItem.hp ? targetItem.hp : 0;
+  user.str += targetItem.str ? targetItem.str : 0;
+  user.def += targetItem.def ? targetItem.def : 0;
 
   user.items = userItems.filter((item) => item.qunatity > 0);
 
@@ -40,7 +39,7 @@ router.get('/:id', setAuth, async (req, res) => {
 
   const message = `${targetItem.name}을 획득했다!`;
 
-  res.status(200).send({ userInfo, targetItemName, message });
+  res.status(200).send({ userInfo, id: targetItem.id, name: targetItemName, message });
 });
 
 module.exports = router;

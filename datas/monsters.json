@@ -1,8 +1,1 @@
-[
-  { "name": "대학 선배", "maxHp": 305, "hp": 305, "exp": 36, "str": 63, "def": 12, "id": -1 },
-  { "name": "중학교 동창", "maxHp": 50, "hp": 50, "exp": 35, "str": 12, "def": 2, "id": -1 },
-  { "name": "전 애인", "maxHp": 155, "hp": 155, "exp": 21, "str": 33, "def": 2, "id": -1 },
-  { "name": "첫사랑", "maxHp": 500, "hp": 500, "exp": 33, "str": 102, "def": 15, "id": -1 },
-  { "name": "그녀의 과제", "maxHp": 305, "hp": 305, "exp": 32, "str": 63, "def": 5, "id": -1 },
-  { "name": "인관심 조원", "maxHp": 70, "hp": 70, "exp": 30, "str": 16, "def": 15, "id": -1 }
-]
+[{"name":"대학 선배","maxHp":390,"hp":390,"exp":34,"str":80,"def":15,"description":"그녀의 대학 선배가 등장했다. \"오빠가~\"","id":0},{"name":"중학교 동창","maxHp":335,"hp":335,"exp":28,"str":69,"def":4,"description":"그녀의 중학교 동창이 등장했다.","id":1},{"name":"전 애인","maxHp":375,"hp":375,"exp":23,"str":77,"def":14,"description":"그녀의 전 애인이 등장했다. 헉..","id":2},{"name":"첫사랑","maxHp":425,"hp":425,"exp":36,"str":87,"def":13,"description":"그녀의 첫사랑이 등장했다. 이런...","id":3},{"name":"그녀의 과제","maxHp":195,"hp":195,"exp":23,"str":41,"def":14,"description":"그녀의 과제가 등장했다. 좀 많은가..?","id":4},{"name":"인관심 조원","maxHp":365,"hp":365,"exp":25,"str":75,"def":7,"description":"그녀의 인관심 조원이 등장했다.","id":5}]
