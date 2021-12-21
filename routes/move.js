@@ -2,7 +2,9 @@ const express = require('express');
 const { MAP_TYPE } = require('../constant/constant');
 const router = express.Router();
 
-const { Map, Monster, Item } = require('../models');
+const { setAuth } = require('../utils');
+
+const { Map, Monster, Item, Rest } = require('../models');
 const { checkIsValidCoordinate } = require('../utils/checkHelper');
 const { getRandomNumberWithMaximum, getRandomMapType } = require('../utils/random');
 
@@ -15,36 +17,34 @@ router.post('/', async (req, res) => {
   const randomNumber = getRandomNumberWithMaximum(3);
   const randomMapType = getRandomMapType(randomNumber);
 
-  const matchedMap = await Map.find({ event: randomMapType }).then((maps) => {
-    const randomMapIndex = getRandomNumberWithMaximum(maps.length);
-    return maps[randomMapIndex];
-  });
-
   const { BATTLE, ITEM, REST } = MAP_TYPE;
-  let matchedObj;
+
   switch (randomMapType) {
     case BATTLE:
-      matchedObj = await Monster.find().then((monsters) => {
+      const monster = await Monster.find().then((monsters) => {
         const randomMonsterIndex = getRandomNumberWithMaximum(monsters.length);
         return monsters[randomMonsterIndex];
       });
-      break;
+
+      return res.send({ event: randomMapType, id: monster.id, message: monster.message });
+
     case ITEM:
-      matchedObj = await Item.find().then((items) => {
+      const item = await Item.find().then((items) => {
         const randomItemIndex = getRandomNumberWithMaximum(items.length);
         return items[randomItemIndex];
       });
-      break;
+
+      return res.send({ event: randomMapType, id: item.id, message: item.message });
+
     case REST:
     default:
-      matchedObj = await Rest.find().then((rests) => {
+      const rest = await Rest.find().then((rests) => {
         const randomItemIndex = getRandomNumberWithMaximum(rests.length);
         return rests[randomItemIndex];
       });
-      break;
-  }
 
-  return res.send({ matchedMap, matchedObj });
+      return res.send({ event: randomMapType, id: rest.id, message: rest.message });
+  }
 });
 
 module.exports = router;
