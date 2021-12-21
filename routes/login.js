@@ -15,11 +15,10 @@ router.post('/', async (req, res) => {
     return res.status(403).send({ error: 'Wrong Password. Check it again.' });
   const pub = encryptPassword(crypto.randomBytes(20));
   const sec = encryptPassword(crypto.randomBytes(20));
-  const _jwt = jwt.sign({ publicKey: pub }, sec, { expiresIn: 3600 });
+  const _jwt = jwt.sign({ publicKey: pub }, sec, { expiresIn: 360000 });
 
   const key = new Key({ publicKey: pub, secretKey: sec, user });
   await key.save();
-
   const { level, str, def, hp, exp, items } = user;
   const userInfo = { level, str, def, hp, exp, items };
   res.send({ userInfo, event: 'rest', accessToken: _jwt });

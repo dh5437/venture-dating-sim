@@ -22,6 +22,7 @@ app.use('/item', require('./routes/item'));
 app.use('/rest', require('./routes/rest'));
 app.use('/move', require('./routes/move'));
 app.use('/battle', require('./routes/battle'));
+app.use('/start', require('./routes/start'));
 
 app.listen(PORT, () => {
   console.log(`listening at port : ${PORT}`);
