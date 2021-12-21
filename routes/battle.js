@@ -24,6 +24,12 @@ router.get('/:turn', setAuth, async (req, res) => {
       if (user.exp >= 100) {
         user.level += 1;
         user.exp -= 100;
+        await user.save();
+        if (user.level === 5) {
+          return res
+            .status(200)
+            .send({ message: '그녀와의 사랑이 이루어졌다. 올해 크리스마스는 따뜻할거야!!' });
+        }
       }
       await user.save();
       const message = `${monster.name}을 무찔렀습니다! 경험치가 ${monster.exp}만큼 회복되었습니다!
