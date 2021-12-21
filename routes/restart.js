@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { setAuth } = require('../utils');
 
-router.get('/', setAuth, (req, res) => {
+router.get('/', setAuth, async (req, res) => {
   const user = req.user;
   const userInfo = {
     level: user.level,
@@ -13,10 +13,5 @@ router.get('/', setAuth, (req, res) => {
     exp: user.exp,
     items: user.items,
   };
-
-  const message = '성공적으로 도망쳤다!';
-
-  res.send({ userInfo, message });
+  return res.status(200).send({ userInfo });
 });
-
-module.exports = router;

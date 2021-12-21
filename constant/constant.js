@@ -4,4 +4,4 @@ const MAP_TYPE = {
   REST: 'rest',
 };
 
-module.exports = MAP_TYPE;
+module.exports = { MAP_TYPE };

@@ -29,7 +29,14 @@ const init = async () => {
   }
   fs.writeFileSync('./datas/rest.json', JSON.stringify(restJson));
 
-  const monsters = ['대학 선배', '중학교 동창', '전 애인', '첫사랑', '그녀의 과제', '인관심 조원'];
+  const monsters = [
+    ['대학 선배', '그녀의 대학 선배가 등장했다. "오빠가~"'],
+    ['중학교 동창', '그녀의 중학교 동창이 등장했다.'],
+    ['전 애인', '그녀의 전 애인이 등장했다. 헉..'],
+    ['첫사랑', '그녀의 첫사랑이 등장했다. 이런...'],
+    ['그녀의 과제', '그녀의 과제가 등장했다. 좀 많은가..?'],
+    ['인관심 조원', '그녀의 인관심 조원이 등장했다.'],
+  ];
   const monsterJson = [];
   for (const _monster of monsters) {
     const _maxHp = Math.ceil(Math.random() * 100) * 5;
@@ -39,22 +46,22 @@ const init = async () => {
     const _def = Math.ceil(Math.random() * 15);
 
     const monster = new Monster({
-      name: _monster,
+      name: _monster[0],
       maxHp: _maxHp,
       hp: _hp,
       exp: _exp,
       str: _str,
       def: _def,
-      id: monsters.indexOf(_monster),
+      id: monsters.indexOf(_monster[0]),
     });
     monsterJson.push({
-      name: _monster,
+      name: _monster[0],
       maxHp: _maxHp,
       hp: _hp,
       exp: _exp,
       str: _str,
       def: _def,
-      id: monsters.indexOf(_monster),
+      id: monsters.indexOf(_monster[0]),
     });
     await monster.save();
   }
