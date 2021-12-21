@@ -66,11 +66,7 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
         monster.hp -= user.str - monster.def;
         const message = `그녀의 ${monster.name}에게 상처를 입혔다! 통쾌하다.
         ${user.str - monster.def}의 피해를 입혔다! (적의 남은 체력 : ${monster.hp})`;
-
-        console.log(message);
         await monster.save();
-        console.log(user);
-        console.log(monster);
 
         if (turn > 10 || (0 < remainUserHp && remainUserHp <= 0.2)) {
           return res.status(200).send({ userInfo, message, canEscape: true });
@@ -85,10 +81,7 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
         const message = `그녀의 ${monster.name}이 공격에 성공했다! 아프다!
         ${monster.str - user.def}의 피해를 입었다! (적의 남은 체력 : ${monster.hp})`;
 
-        console.log(message);
         await user.save();
-        console.log(user);
-        console.log(monster);
 
         if (turn > 10 || (0 < remainUserHp && remainUserHp <= 0.2)) {
           return res.status(200).send({ userInfo, message, canEscape: true });
