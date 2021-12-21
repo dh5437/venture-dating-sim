@@ -6,7 +6,7 @@ const itemSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   quantity: Number,
   hp: Number,
-  exp: Number,
+  def: Number,
   str: Number,
   id: Number,
   description: String,
