@@ -11,6 +11,6 @@ const itemSchema = new Schema({
   id: Number,
   isActive: Boolean,
 });
-itemSchema.index({ name: 1, user: 1 }, { unique: true });
+
 const Item = mongoose.model('Item', itemSchema);
 module.exports = Item;
