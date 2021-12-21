@@ -27,6 +27,11 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
     user.hp = user.maxHp;
     user.exp += monster.exp;
     // 레벨업
+    if (user.level === 5) {
+      return res
+        .status(200)
+        .send({ message: '그녀와의 사랑이 이루어졌다. 올해 크리스마스는 따뜻할거야!!' });
+    }
     if (user.exp >= 100) {
       user.level += 1;
       user.exp -= 100;
@@ -34,19 +39,12 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
       user.str += 5;
       user.def += 3;
       await user.save();
-      if (user.level === 5) {
-        return res
-          .status(200)
-          .send({ message: '그녀와의 사랑이 이루어졌다. 올해 크리스마스는 따뜻할거야!!' });
-      } else {
-        return res.status(200).send({ message: '레벨업하였습니다.' });
-      }
+      return res.status(200).send({ userInfo, message: '레벨업하였습니다.' });
     } else {
-      const message = `${monster.name}을 무찔렀습니다! 경험치가 ${monster.exp}만큼 회복되었습니다!
+      const message = `${monster.name}을 무찔렀습니다! 경험치가 ${monster.exp}만큼 증가하였습니다!
         "${monster.name}... 별 거 아니군.."`;
       const isVictory = true;
       await user.save();
-
       return res.status(200).send({ userInfo, message, isVictory });
     }
   } else if (user.hp + user.def - monster.str <= 0) {
@@ -82,6 +80,7 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
         user.hp -= monster.str - user.def;
         const message = `그녀의 ${monster.name}이 공격에 성공했다! 아프다!
         ${monster.str - user.def}의 피해를 입었다! (적의 남은 체력 : ${monster.hp})`;
+
         await user.save();
 
         if (turn > 10 || (0 < remainUserHp && remainUserHp <= 0.2)) {
