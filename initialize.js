@@ -42,10 +42,10 @@ const init = async () => {
   const monsterJson = [];
 
   monsters.forEach(async (_monster, index) => {
-    const _maxHp = Math.ceil(Math.random() * 100) * 5;
+    const _maxHp = Math.ceil(Math.random() * 20) * 3;
     const _hp = _maxHp;
-    const _exp = Math.ceil(Math.random() * 20) + 20;
-    const _str = _hp / 5 + 2;
+    const _exp = Math.ceil(Math.random() * 20) + 10;
+    const _str = _maxHp / 6 + 2;
     const _def = Math.ceil(Math.random() * 15);
 
     const monster = new Monster({
