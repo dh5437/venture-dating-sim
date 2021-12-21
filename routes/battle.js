@@ -22,7 +22,7 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
   if (turn < 1) {
     return res.sendStatus(404);
   }
-  if (monster.hp <= 0) {
+  if (monster.hp + monster.def - user.str <= 0) {
     // 몬스터를 무찌른 조건
     user.hp = user.maxHp;
     user.exp += monster.exp;
@@ -47,7 +47,7 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
       const isVictory = true;
       return res.status(200).send({ userInfo, message, isVictory });
     }
-  } else if (user.hp <= 0) {
+  } else if (user.hp + user.def - monster.str <= 0) {
     userItems.forEach((e) => {
       if (Math.random() < 0.5) {
         e.delete;
