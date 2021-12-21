@@ -28,9 +28,9 @@ router.get('/:id', setAuth, async (req, res) => {
   await targetItem.save();
   await user.save();
 
-  const log = `아이템 ${targetItem.name}을 획득했다!`;
+  const message = `아이템 ${targetItem.name}을 획득했다!`;
 
-  res.status(200).send({ user, targetItem, log });
+  res.status(200).send({ user, targetItem, message });
 });
 
 module.exports = router;
