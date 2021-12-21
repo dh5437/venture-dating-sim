@@ -8,6 +8,7 @@ const monsterSchema = new Schema({
   exp: Number,
   str: Number,
   def: Number,
+  description: String,
   id: Number,
 });
 
