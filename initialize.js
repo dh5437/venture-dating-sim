@@ -91,14 +91,14 @@ const init = async () => {
 
   const itemJson = [];
   items.forEach(async (_item, index) => {
-    const property = ['hp', 'exp', 'str'];
+    const property = ['hp', 'def', 'str'];
     const value = property[Math.floor(Math.random() * 3)];
     if (value === 'hp') {
-      const randomhp = Math.ceil(Math.random() * 50);
+      const randomHp = Math.ceil(Math.random() * 50);
       const item = new Item({
         name: _item[0],
-        hp: randomhp,
-        exp: 0,
+        hp: randomHp,
+        def: 0,
         str: 0,
         id: index,
         description: _item[1],
@@ -106,20 +106,20 @@ const init = async () => {
       });
       itemJson.push({
         name: _item[0],
-        hp: randomhp,
-        exp: 0,
+        hp: randomHp,
+        def: 0,
         str: 0,
         id: index,
         description: _item[1],
         isActive: true,
       });
       await item.save();
-    } else if (value === 'exp') {
-      const randomexp = Math.ceil(Math.random() * 40);
+    } else if (value === 'def') {
+      const randomDef = Math.ceil(Math.random() * 40);
       const item = new Item({
         name: _item[0],
         hp: 0,
-        exp: randomexp,
+        def: randomDef,
         str: 0,
         id: index,
         description: _item[1],
@@ -128,7 +128,7 @@ const init = async () => {
       itemJson.push({
         name: _item[0],
         hp: 0,
-        exp: randomexp,
+        def: randomDef,
         str: 0,
         id: index,
         description: _item[1],
@@ -136,12 +136,12 @@ const init = async () => {
       });
       await item.save();
     } else {
-      const randomstr = Math.ceil(Math.random() * 20);
+      const randomStr = Math.ceil(Math.random() * 20);
       const item = new Item({
         name: _item[0],
         hp: 0,
-        exp: 0,
-        str: randomstr,
+        def: 0,
+        str: randomStr,
         id: index,
         description: _item[1],
         isActive: true,
@@ -149,8 +149,8 @@ const init = async () => {
       itemJson.push({
         name: _item[0],
         hp: 0,
-        exp: 0,
-        str: randomstr,
+        def: 0,
+        str: randomStr,
         id: index,
         description: _item[1],
         isActive: true,
