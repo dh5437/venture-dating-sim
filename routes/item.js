@@ -18,12 +18,12 @@ router.get('/:id', setAuth, async (req, res) => {
     return res.status(404).send({ error: 'corresponding item is not found' });
   }
 
-  targetItem.qunatity += 1;
+  targetItem.quantity += 1;
   user.hp += targetItem.hp ? targetItem.hp : 0;
   user.str += targetItem.str ? targetItem.str : 0;
   user.def += targetItem.def ? targetItem.def : 0;
 
-  user.items = userItems.filter((item) => item.qunatity > 0);
+  user.items = userItems.filter((item) => item.quantity > 0);
 
   await targetItem.save();
   await user.save();
