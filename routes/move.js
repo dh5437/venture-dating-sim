@@ -6,7 +6,7 @@ const { checkIsValidCoordinate } = require('../utils/checkHelper');
 const { getRandomNumberWithMaximum, getRandomMapType } = require('../utils/random');
 
 router.post('/', async (req, res) => {
-  const { rowIndex, columnIndex } = req.params;
+  const { rowIndex, columnIndex } = req.query;
 
   if (checkIsValidCoordinate(+rowIndex, +columnIndex)) {
     return res.status(400).send({ message: '잘못된 접근입니다.' });
