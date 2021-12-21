@@ -7,7 +7,7 @@ router.get('/:turn', setAuth, async (req, res) => {
   const user = req.user;
   const { turn } = req.params;
   const remainTurn = 5 - turn;
-  const log = '시작 능력치가 새롭게 설정되었습니다!';
+  const message = '시작 능력치가 새롭게 설정되었습니다!';
 
   if (1 <= turn && turn <= 5) {
     user.str = Math.floor(Math.random() * 11) + 5;
@@ -17,7 +17,7 @@ router.get('/:turn', setAuth, async (req, res) => {
   }
 
   await user.save();
-  res.send({ remainTurn, log, user });
+  res.send({ remainTurn, message, user });
 });
 
 module.exports = router;
