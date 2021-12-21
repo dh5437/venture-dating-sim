@@ -5,9 +5,17 @@ const { setAuth } = require('../utils');
 
 router.get('/', setAuth, (req, res) => {
   const user = req.user;
-  const message = '성공적으로 도망쳤습니다!';
+  const userInfo = {
+    level: user.level,
+    str: user.str,
+    def: user.def,
+    hp: user.hp,
+    exp: user.exp,
+  };
 
-  res.send({ user, message });
+  const message = '성공적으로 도망쳤다!';
+
+  res.send({ userInfo, message });
 });
 
 module.exports = router;
