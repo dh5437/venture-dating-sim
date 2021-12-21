@@ -1,4 +1,4 @@
-const { Coordinate, Item, Key, Map, Monster, User } = require('./models');
+const { Coordinate, Item, Key, Map, Monster, User, Rest } = require('./models');
 const fs = require('fs');
 const init = async () => {
   await Coordinate.deleteMany();
@@ -7,24 +7,55 @@ const init = async () => {
   await Map.deleteMany();
   await Monster.deleteMany();
   await User.deleteMany();
+  await Rest.deleteMany();
+
+  const restEvents = [
+    '놀랍도록 아무 일도 이어나지 않았다.',
+    '지루한 나날의 연속이다.',
+    '다이어트를 하는 중이다.',
+    '어쩐지 조용한 날이다.',
+    '구름 한 점 없이 맑은 날이다.',
+    '의미없는 크리스마스다.',
+    '크리스마스 이브다 어쩔.....',
+  ];
+  const restJson = [];
+  for (const _rest of restEvents) {
+    const _description = _rest;
+    const rest = new Rest({
+      description: _description,
+    });
+    restJson.push({ description: _description });
+    await rest.save();
+  }
+  fs.writeFileSync('./datas/rest.json', JSON.stringify(restJson));
 
   const monsters = ['대학 선배', '중학교 동창', '전 애인', '첫사랑', '그녀의 과제', '인관심 조원'];
   const monsterJson = [];
   for (const _monster of monsters) {
-    const _maxhp = Math.ceil(Math.random() * 100) * 5;
-    const _hp = _maxhp;
-    const _exp = _hp / 4 + 20;
+    const _maxHp = Math.ceil(Math.random() * 100) * 5;
+    const _hp = _maxHp;
+    const _exp = Math.ceil(Math.random() * 20) + 20;
     const _str = _hp / 5 + 2;
     const _def = Math.ceil(Math.random() * 15);
+
     const monster = new Monster({
       name: _monster,
-      maxhp: _maxhp,
+      maxHp: _maxHp,
       hp: _hp,
       exp: _exp,
       str: _str,
       def: _def,
+      id: monsters.indexOf(_monster),
     });
-    monsterJson.push({ name: _monster, maxhp: _maxhp, hp: _hp, exp: _exp, str: _str, def: _def });
+    monsterJson.push({
+      name: _monster,
+      maxHp: _maxHp,
+      hp: _hp,
+      exp: _exp,
+      str: _str,
+      def: _def,
+      id: monsters.indexOf(_monster),
+    });
     await monster.save();
   }
   fs.writeFileSync('./datas/monsters.json', JSON.stringify(monsterJson));
@@ -128,15 +159,15 @@ const init = async () => {
   const remainingCoordinates = [...Array(100).keys()].slice(1); // [1,2,3,4,5,6,7,8,9... 99]
   maps.push({ coordinate: { x: 0, y: 0 }, event: 'rest' });
 
-  while (maps.length < 75) {
+  while (maps.length < 100) {
     const mapCoordinate = remainingCoordinates.splice(
       Math.floor(Math.random() * remainingCoordinates.length),
       1,
     )[0];
     const _x = Math.floor(mapCoordinate / 10);
     const _y = mapCoordinate % 10;
-    if (maps.length < 25) maps.push({ coordinate: { x: _x, y: _y }, event: 'rest' });
-    else if (maps.length < 50) maps.push({ coordinate: { x: _x, y: _y }, event: 'battle' });
+    if (maps.length < 34) maps.push({ coordinate: { x: _x, y: _y }, event: 'rest' });
+    else if (maps.length < 67) maps.push({ coordinate: { x: _x, y: _y }, event: 'battle' });
     else maps.push({ coordinate: { x: _x, y: _y }, event: 'item' });
   }
 

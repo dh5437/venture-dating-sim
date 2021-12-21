@@ -8,7 +8,7 @@ const userSchema = new Schema({
   keys: [{ type: Schema.Types.ObjectId, ref: 'Key' }],
   level: Number,
   items: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
-  maxhp: Number,
+  maxHp: Number,
   hp: Number,
   exp: Number,
   str: Number,
