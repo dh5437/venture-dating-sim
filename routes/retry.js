@@ -6,10 +6,6 @@ const { setAuth } = require('../utils');
 router.get('/:turn', setAuth, async (req, res) => {
   const user = req.user;
   const { turn } = req.params;
-  const userInfo = {
-    str: user.str,
-    def: user.def,
-  };
   const remainTurn = 5 - turn;
 
   const message = '시작 능력치가 새롭게 설정되었습니다!';
@@ -22,6 +18,11 @@ router.get('/:turn', setAuth, async (req, res) => {
   }
 
   await user.save();
+
+  const userInfo = {
+    str: user.str,
+    def: user.def,
+  };
 
   res.send({ remainTurn, message, userInfo });
 });
