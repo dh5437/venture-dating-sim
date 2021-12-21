@@ -3,12 +3,12 @@ const router = express.Router();
 
 const { setAuth } = require('../utils');
 
-router.get('/', setAuth, (req, res) => {
+router.get('/me', setAuth, (req, res) => {
   const user = req.user;
   const { level, str, def, hp, exp, items } = user;
   const userInfo = { level, str, def, hp, exp, items };
-  const message = '그녀의 마음을 사로잡으러 가자><';
-  res.send({ userInfo, event: 'rest', message });
-});
 
-event.map.items.userinfo();
+  const map = await Map.findById(user.map);
+  const event = map.event;
+  res.send({ userInfo, map, event });
+});
