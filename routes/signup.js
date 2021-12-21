@@ -35,7 +35,7 @@ router.post(
         password: encryptedPassword,
         name: name,
         level: 1,
-        maxhp: 100,
+        maxHp: 100,
         hp: 100,
         exp: 0,
         str: 10,

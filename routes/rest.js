@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const { setAuth } = require('../utils');
+const { Rest } = require('../models');
 
-router.get('/', setAuth, (req, res) => {
+router.get('/:id', setAuth, async (req, res) => {
   const user = req.user;
-  const message = '놀랍게도 아무 일도 일어나지 않았다...';
+  const { id } = req.params;
+  const rest = await Rest.findOne({ id });
+  const message = rest.description;
 
   res.send({ user, message });
 });

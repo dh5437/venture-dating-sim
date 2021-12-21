@@ -23,7 +23,8 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
   } else if (turn > 10 || user.hp / user.maxHp <= 0.2) {
     const isEnded = false;
     const canEscape = true;
-    return res.status(200).send({ canEscape, isEnded });
+    const message = '도망가시겠습니까?';
+    return res.status(200).send({ userInfo, message, canEscape, isEnded });
   } else {
     if (monster.hp <= 0) {
       user.hp = user.maxHp;
@@ -31,6 +32,9 @@ router.get('/:turn/:id', setAuth, async (req, res) => {
       if (user.exp >= 100) {
         user.level += 1;
         user.exp -= 100;
+        user.maxHp += 50;
+        user.str += 5;
+        user.def += 3;
         await user.save();
         if (user.level === 5) {
           return res
