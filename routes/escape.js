@@ -11,6 +11,7 @@ router.get('/', setAuth, (req, res) => {
     def: user.def,
     hp: user.hp,
     exp: user.exp,
+    items: user.items,
   };
 
   const message = '성공적으로 도망쳤다!';

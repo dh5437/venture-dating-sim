@@ -11,6 +11,7 @@ router.get('/', setAuth, async (req, res) => {
     def: user.def,
     hp: user.hp,
     exp: user.exp,
+    items: user.items,
   };
   return res.status(200).send({ userInfo });
 });
