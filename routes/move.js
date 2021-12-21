@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
         return monsters[randomMonsterIndex];
       });
 
-      return res.send({ event: randomMapType, id: monster.id, message: monster.message });
+      return res.send({ event: randomMapType, id: monster.id, message: monster.description });
 
     case ITEM:
       const item = await Item.find().then((items) => {
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
         return items[randomItemIndex];
       });
 
-      return res.send({ event: randomMapType, id: item.id, message: item.message });
+      return res.send({ event: randomMapType, id: item.id, message: item.description });
 
     case REST:
     default:
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
         return rests[randomItemIndex];
       });
 
-      return res.send({ event: randomMapType, id: rest.id, message: rest.message });
+      return res.send({ event: randomMapType, id: rest.id, message: rest.description });
   }
 });
 
