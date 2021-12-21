@@ -3,11 +3,12 @@ const { Schema } = mongoose;
 
 const monsterSchema = new Schema({
   name: String,
-  maxhp: Number,
+  maxHp: Number,
   hp: Number,
   exp: Number,
   str: Number,
   def: Number,
+  id: Number,
 });
 
 const Monster = mongoose.model('Monster', monsterSchema);
