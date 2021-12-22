@@ -8,7 +8,9 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
   const MAX_EXP = 100;
   const ATTACK_PROBAILITY = 0.7;
   const user = req.user;
-  let { turn, id, monsterHp } = req.params;
+  let { id } = req.params;
+  let turn = +req.params.turn;
+  let monsterHp = +req.params.monsterHp;
   const monster = await Monster.findOne({ id });
   const userItems = user.items;
   const isAttack = Math.random() <= 0.7 ? true : false;
@@ -18,17 +20,17 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
   let canEscape = false;
   let isFinished = false;
 
-  if (!monsterHp) monsterHp = monster.maxHp;
+  if (monsterHp === -1) monsterHp = monster.maxHp;
   if (turn < 1) return res.sendStatus(404);
   if (user.hp <= Math.floor(user.maxHp * 0.2) || turn >= 10) canEscape = true;
   turn += 1;
 
   if (isAttack) {
     // 공격하는 경우
-    damage = max(0, user.str - monster.def);
+    damage = Math.max(0, user.str - monster.def);
     monsterHp -= damage;
     message = `그녀의 ${monster.name}에게 상처를 입혔다! 통쾌하다.\n
-        ${damage}의 피해를 입혔다! (적의 남은 체력 : ${monsterHp})\n`;
+        ${damage}의 피해를 입혔다! (적의 남은 체력 : ${Math.max(monsterHp, 0)})\n`;
 
     if (monsterHp <= 0) {
       // 몹을 잡은 경우
@@ -48,9 +50,9 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     }
   } else {
     // 맞는 경우
-    damage = max(0, monster.str - user.def);
+    damage = Math.max(0, monster.str - user.def);
     user.hp -= damage;
-    message = `그녀의 ${monster.name}이 공격에 성공했다! 아프다! \n ${damage}의 피해를 입었다! (적의 남은 체력 : ${monster.hp})`;
+    message = `그녀의 ${monster.name}이 공격에 성공했다! 아프다! \n ${damage}의 피해를 입었다! (적의 남은 체력 : ${monsterHp})`;
     if (user.hp <= 0) {
       // 죽은 경우
       isEnded = true;
@@ -76,7 +78,16 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     items: user.items,
   };
   await user.save();
-  return res.send({ userInfo, isVictory, isEnded, isFinished, canEscape, turn, monsterHp });
+  return res.send({
+    userInfo,
+    isVictory,
+    isEnded,
+    isFinished,
+    canEscape,
+    turn,
+    monsterHp,
+    message,
+  });
 });
 
 //   if (monster.hp + monster.def - user.str <= 0) {

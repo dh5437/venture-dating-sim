@@ -34,7 +34,6 @@ router.get('/:id', setAuth, async (req, res) => {
     maxHp: user.maxHp,
     hp: user.hp,
     exp: user.exp,
-    maxHp: user.maxHp,
     items: user.items,
   };
 
