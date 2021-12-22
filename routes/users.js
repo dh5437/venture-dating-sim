@@ -6,7 +6,7 @@ const { setAuth } = require('../utils');
 router.get('/me', setAuth, async (req, res) => {
   const user = req.user;
   const { level, str, def, hp, exp, items } = user;
-  const userInfo = { level, str, def, hp, exp, items };
+  const userInfo = { level, str, def, hp, maxHp, exp, items };
 
   const map = await Map.findById(user.map);
   const event = map.event;

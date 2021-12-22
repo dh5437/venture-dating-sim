@@ -24,7 +24,6 @@ router.get('/:id', setAuth, async (req, res) => {
   user.def += targetItem.def ? targetItem.def : 0;
 
   user.items = userItems.filter((item) => item.quantity > 0);
-
   await targetItem.save();
   await user.save();
 
@@ -32,8 +31,10 @@ router.get('/:id', setAuth, async (req, res) => {
     level: user.level,
     str: user.str,
     def: user.def,
+    maxHp: user.maxHp,
     hp: user.hp,
     exp: user.exp,
+    maxHp: user.maxHp,
     items: user.items,
   };
 
