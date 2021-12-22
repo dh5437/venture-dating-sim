@@ -4,7 +4,7 @@ const { PORT } = require('./config');
 
 const app = express();
 const corsOption = {
-  origin: 'http://localhost:3000',
+  origin: 'https://dating-sim.herokuapp.com',
 };
 
 app.use(express.json());
