@@ -33,7 +33,12 @@ router.post('/', async (req, res) => {
         const randomItemIndex = getRandomNumberWithMaximum(items.length);
         return items[randomItemIndex];
       });
-      return res.send({ event: randomMapType, id: item.id, message: item.description });
+      return res.send({
+        event: randomMapType,
+        id: item.id,
+        message: item.description,
+        name: item.name,
+      });
 
     case REST:
     default:

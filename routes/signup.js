@@ -38,8 +38,8 @@ router.post(
         maxHp: 100,
         hp: 100,
         exp: 0,
-        str: 20,
-        def: 5,
+        str: 10,
+        def: 10,
         turn: 0,
         map: map,
       });
