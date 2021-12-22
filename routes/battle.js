@@ -2,33 +2,35 @@ const express = require('express');
 const router = express.Router();
 
 const { setAuth } = require('../utils');
-const { Monster } = require('../models');
+const { Monster, Coordinate, Map } = require('../models');
 
 router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
   const MAX_EXP = 100;
-  const ATTACK_PROBAILITY = 0.7;
+  const ATTACK_PROBABILITY = 0.7;
   const user = req.user;
-  let { turn, id, monsterHp } = req.params;
+  let { id } = req.params;
+  let turn = +req.params.turn;
+  let monsterHp = +req.params.monsterHp;
   const monster = await Monster.findOne({ id });
   const userItems = user.items;
-  const isAttack = Math.random() <= 0.7 ? true : false;
+  const isAttack = Math.random() <= ATTACK_PROBABILITY ? true : false;
   let isVictory = false;
   let message = '';
   let isEnded = false;
   let canEscape = false;
   let isFinished = false;
 
-  if (!monsterHp) monsterHp = monster.maxHp;
+  if (monsterHp === -1) monsterHp = monster.maxHp;
   if (turn < 1) return res.sendStatus(404);
   if (user.hp <= Math.floor(user.maxHp * 0.2) || turn >= 10) canEscape = true;
   turn += 1;
 
   if (isAttack) {
     // 공격하는 경우
-    damage = max(0, user.str - monster.def);
+    damage = Math.max(0, user.str - monster.def);
     monsterHp -= damage;
     message = `그녀의 ${monster.name}에게 상처를 입혔다! 통쾌하다.\n
-        ${damage}의 피해를 입혔다! (적의 남은 체력 : ${monsterHp})\n`;
+        ${damage}의 피해를 입혔다! (적의 남은 체력 : ${Math.max(monsterHp, 0)})\n`;
 
     if (monsterHp <= 0) {
       // 몹을 잡은 경우
@@ -48,19 +50,20 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     }
   } else {
     // 맞는 경우
-    damage = max(0, monster.str - user.def);
+    damage = Math.max(0, monster.str - user.def);
     user.hp -= damage;
-    message = `그녀의 ${monster.name}이 공격에 성공했다! 아프다! \n ${damage}의 피해를 입었다! (적의 남은 체력 : ${monster.hp})`;
+    message = `그녀의 ${monster.name}이 공격에 성공했다! 아프다! \n ${damage}의 피해를 입었다! (적의 남은 체력 : ${monsterHp})`;
     if (user.hp <= 0) {
       // 죽은 경우
       isEnded = true;
-      message = `${monster.name}에게 당했습니다. 아이템을 하나 잃어버리고 처음으로 돌아갑니다. \n 그녀의 ${monster.name}은 강하구나.. 조심해야지..\n`;
+      message = `${monster.name}에게 당했습니다. 처음으로 돌아갑니다. \n 그녀의 ${monster.name}은 강하구나.. 조심해야지..\n`;
       user.hp = Math.floor(user.maxHp * 0.7);
       // 맵 0,0으로 보내기
-      const coordinate = await Coordinates.findOne({ x: 0, y: 0 });
+      const coordinate = await Coordinate.findOne({ x: 0, y: 0 });
       const maps = await Map.findOne({ coordinate });
       user.map = maps;
       // 템 떨구기
+      if (user.items.length > 0) message += '아이템을 잃어버렸습니다.';
       const lostItemIndex = Math.floor(Math.random() * user.items.length);
       user.items[lostItemIndex].quantity -= 1;
       user.items = user.items.filter((item) => item.quantity > 0);
@@ -76,7 +79,16 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     items: user.items,
   };
   await user.save();
-  return res.send({ userInfo, isVictory, isEnded, isFinished, canEscape, turn, monsterHp });
+  return res.send({
+    userInfo,
+    isVictory,
+    isEnded,
+    isFinished,
+    canEscape,
+    turn,
+    monsterHp,
+    message,
+  });
 });
 
 //   if (monster.hp + monster.def - user.str <= 0) {

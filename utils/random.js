@@ -14,7 +14,13 @@ const getRandomMapType = (index = 0) => {
   return MAP_TYPE.REST;
 };
 
+const getRandomQuery = (queries) => {
+  const randomQueryIndex = getRandomNumberWithMaximum(queries.length);
+  return queries[randomQueryIndex];
+};
+
 module.exports = {
   getRandomNumberWithMaximum,
   getRandomMapType,
+  getRandomQuery,
 };

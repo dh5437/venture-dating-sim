@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 
   const key = new Key({ publicKey: pub, secretKey: sec, user });
   await key.save();
-  const { level, str, def, hp, exp, items } = user;
+  const { level, str, def, hp, exp, items, maxHp } = user;
   const userInfo = { level, str, def, hp, exp, items, maxHp };
   res.send({ userInfo, event: 'rest', accessToken: _jwt });
 });
