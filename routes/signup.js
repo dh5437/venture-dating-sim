@@ -55,6 +55,7 @@ router.post(
         quantity: 0,
         hp: _item.hp,
         exp: _item.exp,
+        def: _item.def,
         str: _item.str,
         id: _item.id,
         user,

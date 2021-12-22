@@ -10,7 +10,7 @@ const init = async () => {
   await Rest.deleteMany();
 
   const restEvents = [
-    '놀랍도록 아무 일도 이어나지 않았다.',
+    '놀랍도록 아무 일도 일어나지 않았다.',
     '지루한 나날의 연속이다.',
     '다이어트를 하는 중이다.',
     '어쩐지 조용한 날이다.',
