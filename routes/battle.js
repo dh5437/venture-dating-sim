@@ -16,9 +16,9 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
   let message = '';
   let isEnded = false;
   let canEscape = false;
+  let isFinished = false;
 
-  if (!monsterHp) monsterHP = monster.maxHp;
-
+  if (!monsterHp) monsterHp = monster.maxHp;
   if (turn < 1) return res.sendStatus(404);
   if (user.hp <= Math.floor(user.maxHp * 0.2) || turn >= 10) canEscape = true;
   turn += 1;
@@ -28,12 +28,12 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     damage = max(0, user.str - monster.def);
     monsterHp -= damage;
     message = `그녀의 ${monster.name}에게 상처를 입혔다! 통쾌하다.\n
-        ${damage}의 피해를 입혔다! (적의 남은 체력 : ${monsterHp})`;
+        ${damage}의 피해를 입혔다! (적의 남은 체력 : ${monsterHp})\n`;
 
     if (monsterHp <= 0) {
       // 몹을 잡은 경우
       isVictory = true;
-      message = `${monster.name}을 무찔렀습니다! 경험치가 ${monster.exp}만큼 증가하였습니다! \n ${monster.name}... 별 거 아니군..\n`;
+      message += `${monster.name}을 무찔렀습니다! 경험치가 ${monster.exp}만큼 증가하였습니다! \n ${monster.name}... 별 거 아니군..\n`;
       user.exp += monster.exp;
       if (user.exp >= MAX_EXP) {
         user.level += 1;
@@ -43,6 +43,7 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
         user.str += 5;
         user.def += 3;
         message += '레벨업하였습니다.';
+        if (user.level === 4) isFinished = true;
       }
     }
   } else {
@@ -53,14 +54,29 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     if (user.hp <= 0) {
       // 죽은 경우
       isEnded = true;
-      message = `${monster.name}에게 당했습니다. 처음으로 돌아갑니다. \n 그녀의 ${monster.name}은 강하구나.. 조심해야지..`;
+      message = `${monster.name}에게 당했습니다. 아이템을 하나 잃어버리고 처음으로 돌아갑니다. \n 그녀의 ${monster.name}은 강하구나.. 조심해야지..\n`;
       user.hp = Math.floor(user.maxHp * 0.7);
       // 맵 0,0으로 보내기
+      const coordinate = await Coordinates.findOne({ x: 0, y: 0 });
+      const maps = await Map.findOne({ coordinate });
+      user.map = maps;
       // 템 떨구기
+      const lostItemIndex = Math.floor(Math.random() * user.items.length);
+      user.items[lostItemIndex].quantity -= 1;
+      user.items = user.items.filter((item) => item.quantity > 0);
     }
   }
+  const userInfo = {
+    level: user.level,
+    str: user.str,
+    def: user.def,
+    maxHp: user.maxHp,
+    hp: user.hp,
+    exp: user.exp,
+    items: user.items,
+  };
   await user.save();
-  return res.send({ userInfo: user, isVictory, isEnded, canEscape, turn, monsterHp });
+  return res.send({ userInfo, isVictory, isEnded, isFinished, canEscape, turn, monsterHp });
 });
 
 //   if (monster.hp + monster.def - user.str <= 0) {

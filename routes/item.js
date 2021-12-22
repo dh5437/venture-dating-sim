@@ -24,7 +24,6 @@ router.get('/:id', setAuth, async (req, res) => {
   user.def += targetItem.def ? targetItem.def : 0;
 
   user.items = userItems.filter((item) => item.quantity > 0);
-
   await targetItem.save();
   await user.save();
 
