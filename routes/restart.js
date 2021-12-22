@@ -10,6 +10,7 @@ router.get('/', setAuth, async (req, res) => {
     str: user.str,
     def: user.def,
     hp: user.hp,
+    maxHp: user.maxHp,
     exp: user.exp,
     items: user.items,
   };

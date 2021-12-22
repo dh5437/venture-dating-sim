@@ -32,8 +32,10 @@ router.get('/:id', setAuth, async (req, res) => {
     level: user.level,
     str: user.str,
     def: user.def,
+    maxHp: user.maxHp,
     hp: user.hp,
     exp: user.exp,
+    maxHp: user.maxHp,
     items: user.items,
   };
 
