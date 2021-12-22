@@ -11,7 +11,7 @@ router.get('/:id', setAuth, async (req, res) => {
   // user.items와는 무관, user당 생성된 아이템들
   // await Item.find({ user })의 리턴값이 배열이 아니라면 userItems가 배열 형태가 되게 fix
   const userItems = await Item.find({ user });
-  const targetItem = userItems.filter((item) => item.id === id)[0];
+  const targetItem = userItems.find((item) => item.id === id);
   const targetItemName = targetItem.name;
 
   if (!targetItem) {

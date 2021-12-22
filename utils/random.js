@@ -15,7 +15,7 @@ const getRandomMapType = (index = 0) => {
 };
 
 const getRandomQuery = (queries) => {
-  const randomQueryIndex = getRandomNumberWithMaximum(queries);
+  const randomQueryIndex = getRandomNumberWithMaximum(queries.length);
   return queries[randomQueryIndex];
 };
 

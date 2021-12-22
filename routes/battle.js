@@ -2,18 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 const { setAuth } = require('../utils');
-const { Monster } = require('../models');
+const { Monster, Coordinate, Map } = require('../models');
 
 router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
   const MAX_EXP = 100;
-  const ATTACK_PROBAILITY = 0.7;
+  const ATTACK_PROBABILITY = 0.7;
   const user = req.user;
   let { id } = req.params;
   let turn = +req.params.turn;
   let monsterHp = +req.params.monsterHp;
   const monster = await Monster.findOne({ id });
   const userItems = user.items;
-  const isAttack = Math.random() <= 0.7 ? true : false;
+  const isAttack = Math.random() <= ATTACK_PROBABILITY ? true : false;
   let isVictory = false;
   let message = '';
   let isEnded = false;
@@ -56,13 +56,14 @@ router.get('/:turn/:id/:monsterHp', setAuth, async (req, res) => {
     if (user.hp <= 0) {
       // 죽은 경우
       isEnded = true;
-      message = `${monster.name}에게 당했습니다. 아이템을 하나 잃어버리고 처음으로 돌아갑니다. \n 그녀의 ${monster.name}은 강하구나.. 조심해야지..\n`;
+      message = `${monster.name}에게 당했습니다. 처음으로 돌아갑니다. \n 그녀의 ${monster.name}은 강하구나.. 조심해야지..\n`;
       user.hp = Math.floor(user.maxHp * 0.7);
       // 맵 0,0으로 보내기
-      const coordinate = await Coordinates.findOne({ x: 0, y: 0 });
+      const coordinate = await Coordinate.findOne({ x: 0, y: 0 });
       const maps = await Map.findOne({ coordinate });
       user.map = maps;
       // 템 떨구기
+      if (user.items.length > 0) message += '아이템을 잃어버렸습니다.';
       const lostItemIndex = Math.floor(Math.random() * user.items.length);
       user.items[lostItemIndex].quantity -= 1;
       user.items = user.items.filter((item) => item.quantity > 0);

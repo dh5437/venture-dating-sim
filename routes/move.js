@@ -20,12 +20,12 @@ router.post('/', setAuth, async (req, res) => {
 
   switch (randomMapType) {
     case BATTLE:
-      const monster = await Monster.find().then(getRandomQuery(monsters));
+      const monster = await Monster.find().then(getRandomQuery);
 
       return res.send({ event: randomMapType, id: monster.id, message: monster.description });
 
     case ITEM:
-      const item = await Item.find().then(getRandomQuery(items));
+      const item = await Item.find().then(getRandomQuery);
       return res.send({
         event: randomMapType,
         id: item.id,
@@ -35,7 +35,7 @@ router.post('/', setAuth, async (req, res) => {
 
     case REST:
     default:
-      const rest = await Rest.find().then(getRandomQuery(rests));
+      const rest = await Rest.find().then(getRandomQuery);
       return res.send({ event: randomMapType, id: rest.id, message: rest.description });
   }
 });
