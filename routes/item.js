@@ -24,7 +24,6 @@ router.get('/:id', setAuth, async (req, res) => {
   user.def += targetItem.def ? targetItem.def : 0;
 
   user.items = userItems.filter((item) => item.quantity > 0);
-
   await targetItem.save();
   await user.save();
 
@@ -32,8 +31,10 @@ router.get('/:id', setAuth, async (req, res) => {
     level: user.level,
     str: user.str,
     def: user.def,
+    maxHp: user.maxHp,
     hp: user.hp,
     exp: user.exp,
+    maxHp: user.maxHp,
     items: user.items,
   };
 
@@ -43,33 +44,3 @@ router.get('/:id', setAuth, async (req, res) => {
 });
 
 module.exports = router;
-
-// const user = req.user;
-// const { id } = req.params;
-// const item = await Item.find({ user, id });
-
-// 여기서 signup시 모두 user.items에 넣어주던지
-// const userItems = user.items;
-// const isValidId = await Item.find({ id });
-// const isInUserItems = userItems.some((testItem) => item.id === testItem.id);
-
-// if (!isValidId) {
-//   return res.status(404).send({ error: 'corresponding item is not found' });
-// }
-
-// if (!isInUserItems) {
-//   userItems.push(item);
-// }
-
-// item.qunatity += 1;
-// user.hp += item.hp;
-// user.exp += item.exp;
-// user.str += item.str;
-// // user.def += item.def
-
-// await item.save();
-// await user.save();
-
-// const log = `아이템 ${item.name}을 획득했다!`;
-
-// res.status(200).send({ user, item, log });
